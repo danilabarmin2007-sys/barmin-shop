@@ -1,5 +1,5 @@
 // ========== ПОДКЛЮЧЕНИЕ К СЕРВЕРУ (БАЗЕ ДАННЫХ) ==========
-const API_URL = 'https://ТВОЙ-ПРОЕКТ.up.railway.app/api';
+const API_URL = 'https://barmin-shop-production.up.railway.app/api';
 
 let currentUser = null;
 
