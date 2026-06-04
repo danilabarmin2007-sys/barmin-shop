@@ -7,7 +7,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ====== POSTGRES RAILWAY ======
+/* =======================
+   HEALTHCHECK (ОЧЕНЬ ВАЖНО)
+======================= */
+app.get('/', (req, res) => {
+    res.send('OK');
+});
+
+/* =======================
+   POSTGRES CONNECT (RAILWAY)
+======================= */
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
@@ -15,20 +24,35 @@ const pool = new Pool({
     }
 });
 
-// ====== PRODUCTS ======
+/* =======================
+   DEBUG (если что-то сломалось)
+======================= */
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION:', err);
+});
+
+process.on('unhandledRejection', (err) => {
+    console.error('UNHANDLED REJECTION:', err);
+});
+
+/* =======================
+   PRODUCTS
+======================= */
 app.get('/api/products', async (req, res) => {
     try {
         const result = await pool.query('SELECT * FROM products');
         res.json(result.rows);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).json({
-            error: err.message || "unknown error"
+            error: err.message || 'unknown error'
         });
     }
 });
 
-// ====== REGISTER ======
+/* =======================
+   REGISTER
+======================= */
 app.post('/api/register', async (req, res) => {
     const { email, password_hash, full_name, phone } = req.body;
 
@@ -41,13 +65,14 @@ app.post('/api/register', async (req, res) => {
         );
 
         res.json({ success: true, user: result.rows[0] });
-
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
 
-// ====== LOGIN ======
+/* =======================
+   LOGIN
+======================= */
 app.post('/api/login', async (req, res) => {
     const { email, password_hash } = req.body;
 
@@ -64,30 +89,30 @@ app.post('/api/login', async (req, res) => {
         }
 
         res.json({ success: true, user: result.rows[0] });
-
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
 
-// ====== GET CART ======
+/* =======================
+   CART GET
+======================= */
 app.get('/api/cart/:userId', async (req, res) => {
-    const { userId } = req.params;
-
     try {
         const result = await pool.query(
             'SELECT * FROM cart WHERE user_id = $1',
-            [userId]
+            [req.params.userId]
         );
 
         res.json(result.rows);
-
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
 
-// ====== SAVE CART ======
+/* =======================
+   CART SAVE
+======================= */
 app.post('/api/cart', async (req, res) => {
     const { user_id, items } = req.body;
 
@@ -103,16 +128,16 @@ app.post('/api/cart', async (req, res) => {
         }
 
         res.json({ success: true });
-
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
 });
 
-// ====== START SERVER ======
+/* =======================
+   START SERVER (ВАЖНО)
+======================= */
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-console.log("DB URL:", process.env.DATABASE_URL);
