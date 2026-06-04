@@ -19,7 +19,13 @@ app.get('/api/products', async (req, res) => {
         const result = await pool.query('SELECT * FROM products');
         res.json(result.rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.log("ERROR:", err);
+        console.log("STACK:", err.stack);
+
+        res.status(500).json({
+            error: err?.message || "unknown error",
+            detail: err
+        });
     }
 });
 
