@@ -1,0 +1,211 @@
+html {
+    scroll-behavior: smooth;
+}
+
+#face-cosmetika,
+#hair-care,
+#makeup,
+#body-care,
+.catalog-title {
+    scroll-margin-top: 100px;  /* Отступ сверху — подгоните под высоту вашей шапки */
+}
+
+.header__main {
+    background-color: #2b2731;
+    z-index: 1000000;
+    width: 800px;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    margin: 20px auto;
+    border-radius: 30px;
+    padding: 0 45px;
+    position: fixed;
+    left: 25%;
+}
+
+
+
+.header__menu-left {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.header__menu-right {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.header-menu {
+    display: flex;
+}
+
+.header__menu-item {
+    color: rgb(255, 255, 255);
+    font-family: Manege sans-serif;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    padding-bottom: 3px;
+}
+
+
+.header__menu-item:hover::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #ffffff; /* акцентный цвет */
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+.header__menu-item:hover {
+  transition: color 0.3s ease;
+  color: #f9f9f9;
+}
+
+.header__menu-icon {
+  margin-left: 60px;
+  margin-right: 45px;
+}
+
+
+.body__main {
+    background: #b48e8e;
+}
+
+.header__fone-img {
+    /* position: absolute; */
+    /* margin-left: 200px; */
+    margin-top: px;
+    
+}
+
+.header__fone {
+    height: 600px;
+    position: relative;
+}
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.header__fone-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    opacity: 0;
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+.header__fone-img.active {
+    opacity: 1;
+}
+
+.header__fone-texts {
+    z-index: 1001;
+    position: absolute;
+    left: 610px;
+    top: 250px;
+    
+    color: rgb(238, 231, 231);
+    font-size: 29px;
+    font-weight: bold;
+    flex-direction: column;
+    display: flex;
+}
+
+.header__fone-bottom {
+    font-size: 15px;
+    font-family: Manege sans-serif;
+    margin-left: 90px;
+    margin-top: 15px;
+    font-weight: normal;
+    margin-bottom: 130px;
+}
+
+
+
+.header__fone-button {
+    margin-left: 71px;
+    width: 260px;
+    background: none;
+    color: rgb(11, 50, 84);
+    border: none;
+    cursor: pointer;
+    padding: 17px 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    border: 0;
+    background-color: white;
+    box-shadow: rgb(0 0 0 / 5%) 0 0 8px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    transition: all 0.5s ease;
+}
+
+.header__fone-button:hover {
+    letter-spacing: 3px;
+  background-color: hsl(2, 45%, 26%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(193, 111, 11) 0px 7px 29px 0px;
+}
+
+.header__fone-button:active {
+  letter-spacing: 3px;
+  background-color: hsl(2, 45%, 26%);
+  color: hsl(0, 0%, 100%);
+  box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
+  transform: translateY(10px);
+  transition: 100ms;
+}
+
+#tovar {
+    scroll-margin-top: 200px; /* Отступ при прокрутке к этому блоку */
+}
+
+
+#splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff; /* Цвет фона заставки (можно изменить) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'YourFont', sans-serif; /* Шрифт (можно заменить) */
+  font-size: 2em; /* Размер текста (настройте под себя) */
+  z-index: 9999; /* Гарантирует, что заставка поверх всего */
+  opacity: 1;
+  animation: fadeOut 4s forwards; /* Анимация исчезновения */
+}
+
+#main-content {
+  opacity: 0;
+  animation: fadeIn 3s 2s forwards; /* начинает появляться сразу (0 с задержка), за 3 с */
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  99% { opacity: 0; pointer-events: none; }
+  100% { display: none; } /* полностью убирает элемент из потока */
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; pointer-events: auto; }
+}

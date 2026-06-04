@@ -1,0 +1,104 @@
+/* Сетка с карточками — центрирование и отступы */
+.product-grid {
+  display: flex;
+  justify-content: space-between; 
+  gap: 37px; /* Расстояние между карточками (было больше, теперь умеренное) */
+  margin: 90px 0px; /* Отступы сверху/снизу и авто-отступы по бокам для центрирования */
+  padding: 0 40px; /* Отступы слева и справа, чтобы карточки не прилипали к краям */
+  max-width: 1400px; /* Максимальная ширина контейнера — карточки не расползутся слишком сильно */
+  width: 73%;
+  margin-left: 37px;
+}
+
+.card {
+  min-width: 350px; /* Минимальная ширина карточки — не меньше 280 px */
+  background: #7e6363;
+  border-radius: 16px; /* Более скруглённые углы */
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12); /* Более объёмная тень */
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  height: 420px; /* Фиксированная высота — карточки вытянуты вверх */
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.03); /* Подпрыгивание + лёгкое увеличение */
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+
+.card img {
+  width: 100%;
+  height: 220px; /* Увеличили высоту изображения */
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+
+.card:hover img {
+  transform: scale(1.08); /* Лёгкое увеличение изображения при наведении */
+}
+
+.card h3 {
+  padding: 18px 15px 8px;
+  color: #ffffff;
+  font-size: 17px;
+  margin: 0;
+  text-align: center;
+  font-weight: normal;
+}
+
+.card p {
+  padding: 0 15px 15px;
+  font-weight: normal;
+  color: #ffffff;
+  line-height: 1.5;
+  text-align: center;
+  flex-grow: 1; /* Занимает всё доступное пространство */
+}
+
+.btn {
+  display: block;
+  background: #533a38;
+  color: white;
+  text-align: center;
+  padding: 14px 0; /* Увеличили вертикальные отступы кнопки */
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.3s;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn:hover {
+  background: #671b1b;
+}
+
+/* Адаптация для планшетов */
+@media (max-width: 992px) {
+  .product-grid {
+    padding: 0 30px;
+    gap: 25px;
+  }
+  .card {
+    width: calc(50% - 15px); /* 2 карточки в ряд */
+    height: auto; /* Высота подстраивается под контент */
+    min-width: unset; /* Снимаем ограничение минимальной ширины */
+  }
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .product-grid {
+    padding: 0 20px;
+    gap: 20px;
+  }
+  .card {
+    width: 100%; /* 1 карточка в ряд */
+    margin-bottom: 20px;
+  }
+  .card img {
+    height: 180px; /* Уменьшаем высоту изображения на мобильных */
+  }
+}

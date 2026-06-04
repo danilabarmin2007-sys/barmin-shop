@@ -1,0 +1,184 @@
+ .footer {
+            background: #3d2b28;
+            color: #e6d7d1;
+            padding-top: 50px;
+            margin-top: 0;
+            border-top: 1px solid #5a423e;
+        }
+
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #5a423e;
+        }
+
+        /* Логотип и описание */
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-description {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #c4a794;
+            margin-bottom: 25px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            background: #5a423e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e6d7d1;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: #e5d2c4;
+            color: #3d2b28;
+            transform: translateY(-3px);
+        }
+
+        /* Заголовки и ссылки */
+        .footer-title {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            color: #ecded3;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: #d6b8a6;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #c4a794;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #e5d2c4;
+            padding-left: 5px;
+        }
+
+        /* Контакты */
+        .footer-contacts {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-contacts li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #c4a794;
+        }
+
+        .footer-contacts svg {
+            flex-shrink: 0;
+        }
+
+        /* Нижняя часть */
+        .footer-bottom {
+            padding: 25px 0;
+        }
+
+        .footer-bottom-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.75rem;
+            color: #a08476;
+        }
+
+        .footer-payment {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .payment-icons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .payment-icons span {
+            padding: 4px 10px;
+            background: #5a423e;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Адаптив */
+        @media (max-width: 992px) {
+            .footer-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .footer-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            
+            .footer-title {
+                text-align: center;
+            }
+            
+            .footer-social {
+                justify-content: center;
+            }
+        }

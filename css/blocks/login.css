@@ -1,0 +1,39 @@
+.login {
+    padding-top: 77px;
+    padding-bottom: 104px;   
+}
+
+.login__container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.login__registration-link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1c136b;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    margin-bottom:30px;
+}
+
+.login__registration-link:hover {
+    color: #3356D7;
+}
+
+.login__registration-link:focus-visible {
+    color: #2143C1;
+    text-decoration: none;
+}
+
+body {
+    background-image: url('../../images/sprite/Mane-fone3.svg');
+    background-repeat: no-repeat; /* Запрещает повторение */
+    background-position: center; /* Центрирует изображение */
+    background-size: cover; 
+}
+

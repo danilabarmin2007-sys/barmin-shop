@@ -1,0 +1,165 @@
+.faq-container {
+            max-width: 800px;
+            margin: 60px auto;
+            background: rgb(139 112 112);
+            backdrop-filter: blur(2px);
+            border-radius: 48px;
+            padding: 32px 28px 48px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255,255,255,0.6);
+            border: 1px solid rgba(255,245,235,0.9);
+        }
+
+        /* Заголовок */
+        .faq-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            text-align: center;
+            margin-bottom: 12px;
+            color: #e0ccc0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .faq-title span {
+            background: #e7d9cf;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #744d39;
+        }
+        .subhead {
+            text-align: center;
+            color: #ffccaa;
+            margin-bottom: 40px;
+            border-bottom: 2px dashed #e2cfbf;
+            display: inline-block;
+            width: auto;
+            padding-bottom: 12px;
+            font-weight: 400;
+            font-size: 1rem;
+        }
+        .subhead-wrapper {
+            text-align: center;
+        }
+
+        /* Стили для аккордеона */
+        .faq-item {
+            background: #ffffff;
+            border-radius: 28px;
+            margin-bottom: 18px;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            border: 1px solid #f1e2d6;
+            overflow: hidden;
+        }
+        .faq-item:hover {
+            border-color: #e7cdbb;
+            box-shadow: 0 8px 18px rgba(110, 60, 30, 0.08);
+        }
+
+        /* Скрываем стандартную стрелку details */
+        .faq-item details {
+            cursor: pointer;
+        }
+        .faq-item details summary {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 28px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            background: #ba8d8d;
+            border-radius: 28px;
+            transition: background 0.2s;
+            gap: 12px;
+        }
+        /* Убираем треугольник в Chrome/Safari/Edge */
+        .faq-item details summary::-webkit-details-marker {
+            display: none;
+        }
+        /* Firefox */
+        .faq-item details > summary {
+            list-style: none;
+            color: #eeeceb;
+        }
+        
+        /* Кастомная иконка (плюс / минус) */
+        .faq-icon {
+            flex-shrink: 0;
+            width: 30px;
+            height: 30px;
+            background: #f3e7df;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 400;
+            transition: all 0.25s;
+            color: #a56b48;
+            line-height: 1;
+        }
+        
+        /* Поворот иконки при открытом details */
+        .faq-item details[open] .faq-icon {
+            background: #cb9a78;
+            color: white;
+            transform: rotate(45deg);
+        }
+
+        /* Ответ */
+        .faq-answer {
+            padding: 6px 28px 28px 28px;
+            border-top: 1px solid #f0e0d4;
+            background: #dacfcf;
+            font-size: 1rem;
+            line-height: 1.55;
+            color: #3a2a1f;
+            border-radius: 0 0 28px 28px;
+        }
+        .faq-answer p {
+            margin-bottom: 12px;
+        }
+        .faq-answer strong {
+            color: #b45f34;
+            font-weight: 600;
+        }
+        
+        /* Доп. красота для мелких заметок */
+        .small-note {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #ffccaa;
+            border-top: 1px solid #eedbcb;
+            padding-top: 24px;
+        }
+        
+        @media (max-width: 550px) {
+            .faq-container {
+                padding: 22px 18px 36px;
+            }
+            .faq-item details summary {
+                padding: 16px 20px;
+                font-size: 1rem;
+            }
+            .faq-answer {
+                padding: 10px 20px 22px 20px;
+                font-size: 0.95rem;
+            }
+            .faq-title {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* легкие украшения */
+        .heart-icon {
+            display: inline-block;
+            font-size: 1.3rem;
+            vertical-align: middle;
+        }

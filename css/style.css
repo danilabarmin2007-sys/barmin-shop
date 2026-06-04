@@ -1,0 +1,32 @@
+/* Global */
+/* ------------------------------------ */
+@import "global/fonts.css";
+@import "global/reboot.css";
+@import "global/container.css";
+@import "global/visually-hidden.css";
+
+
+/* Blocks */
+/* ------------------------------------ */
+
+@import "blocks/login-form.css";
+@import "blocks/login.css";
+@import "blocks/custom-input.css";
+
+@import "blocks/header.css";
+@import "blocks/footer.css";
+
+@import "blocks/forgot-data.css";
+@import "blocks/custom-radio.css";
+
+@import "blocks/registration-form.css";
+@import "blocks/registration-features.css";
+@import "blocks/custom-checkbox.css";
+
+@import "blocks/main/header__main.css";
+@import "blocks/main/product-grid.css";
+@import "blocks/main/aboutus.css";
+@import "blocks/main/faq.css";
+@import "blocks/main/logreg.css";
+@import "blocks/main/footer.css";
+@import "blocks/main/corzina.css";

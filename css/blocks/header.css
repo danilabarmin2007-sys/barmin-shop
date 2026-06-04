@@ -1,0 +1,42 @@
+.header {
+    padding-top: 20px;
+    /* background: #708ba0; */
+}
+
+.header__wrapper {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+
+
+.header__right{
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.header__right-text{
+    display: flex;
+    text-align: right;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.header__text{
+    color: #2d3c6b;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+}
+
+.header__text--gray{
+    color:#dce1ef;
+    font-size: 14px;
+}
+
+.header__logo {
+  display: inline-block; 
+  line-height: 0;
+   
+}

@@ -1,0 +1,249 @@
+.aboutus {
+    width: 100%;
+    height:100%;
+    background-color: #8b7070;
+    padding-top: 25px;
+    padding-bottom: 40px;
+}
+ .catalog-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* заголовок секции (как в примере с "КОСМЕТИКА ДЛЯ ЛИЦА") */
+        .catalog-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .catalog-title h2 {
+            font-size: 2.2rem;
+            font-weight: 640;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #f2eeec 0%, #d6b8a6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .catalog-title p {
+            color: #efecea;
+            font-size: 1rem;
+            border-top: 1px solid #ecded3;
+            display: inline-block;
+            padding-top: 0.6rem;
+        }
+
+        /* ----- НОВАЯ СЕТКА: catalog-grid (2 ряда по 3 карточки) ----- */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.8rem;
+            row-gap: 2.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* карточка товара — плавная, воздушная */
+        .product-tile {
+            background: #b48e8e;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.03), 0 1px 4px rgba(0, 0, 0, 0.05);
+            border: 2px solid #625145;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-tile:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -12px rgba(70, 45, 30, 0.18);
+            border-color: #e2cfc0;
+        }
+
+        /* медиа-блок с иконкой/иллюстрацией (символические изображения косметики) */
+        .product-media {
+            background: #f7f5f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 190px;
+            border-bottom: 1px solid #f3e7df;
+        }
+
+        .product-media img {
+            width: 100%;
+            max-width: 406px;
+            height: auto;
+            display: block;  /* важно! */
+            opacity: 1;      /* убедитесь, что не 0 */
+        }
+
+      
+
+        /* контент карточки */
+        .product-details {
+            padding: 1.2rem 1.2rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            color: #b77b5a;
+            background: #fef0e8;
+            display: inline-block;
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+            width: fit-content;
+            margin-bottom: 0.7rem;
+        }
+
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 650;
+            color: #2d2622;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name-one {
+            margin-bottom: 34px;
+        }
+
+        .product-short {
+            font-size: 0.85rem;
+            color: #e7ded9;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .current-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #3e2a21;
+        }
+
+        .old-price {
+            font-size: 0.85rem;
+            color: #e3dad6;
+            text-decoration: line-through;
+        }
+
+        .btn-view {
+            background: #533a38;
+            color: #e6d7d1;
+            border: none;
+            padding: 0.6rem 0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: 60px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.2s;
+            margin-top: auto;
+            cursor: pointer;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .btn-view:hover {
+            background: #e5d2c4;
+            color: #2f231d;
+        }
+
+        /* адаптивность: на планшетах 2 карточки, на телефонах 1 */
+        @media (max-width: 850px) {
+            .catalog-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+                gap: 1.8rem;
+            }
+            body {
+                padding: 1.2rem;
+            }
+        }
+
+        /* небольшая подпись в футере для атмосферы */
+        .catalog-footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.75rem;
+            color: #bbaa9c;
+            border-top: 1px solid #ecdccf;
+            padding-top: 1.8rem;
+        }
+
+        
+        
+
+
+
+ .back-to-catalog {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 56px;
+            height: 56px;
+            background: #533a38;
+            color: #e6d7d1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid #e2cfc0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+        }
+
+        .back-to-catalog:hover {
+            background: #e5d2c4;
+            color: #2f231d;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .back-to-catalog.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Адаптив для мобильных */
+        @media (max-width: 768px) {
+            .back-to-catalog {
+                right: 20px;
+                bottom: 20px;
+                width: 48px;
+                height: 48px;
+            }
+            .back-to-catalog svg {
+                width: 20px;
+                height: 20px;
+            }
+        }

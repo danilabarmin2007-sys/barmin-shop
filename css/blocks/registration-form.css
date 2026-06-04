@@ -1,0 +1,135 @@
+
+.registration__wrapper{
+    display: flex;
+    gap: 300px;
+}
+
+.registration__form-wrapper{
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    padding-top: 20px;
+    padding-left: 205px;
+    padding-bottom: 0;
+    margin-bottom: 35px;
+}
+
+.registration__form-content{
+    background-color: #61829c;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+    border-radius: 20px;
+    justify-content: center;
+    position: relative;
+    border: 3px solid #FFFFFF;
+}
+
+.registration__title {
+    font-size: 24px;
+    line-height: 28px;
+    color: #1E222E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    margin: -5px 0 27px 0;    
+}
+
+.registration-form__fields {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   margin: 0 0 22px 0; 
+}
+
+.registration-form__field {
+    display: flex;
+    position: relative;
+}
+
+.registration-form__input {
+    border: 2px solid #2a3773;
+    background: #7090a9;
+    border-radius: 8px;
+    width: 386px;
+    height: 44px;
+    padding: 0;
+}
+
+.registration-form__label {
+    position: absolute;
+    left: 16px;
+    bottom: 36px;
+    font-size: 14px;
+    background-color: #ffffff;
+    padding: 0 4px 0 4px;
+}
+
+.registration-form__row {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    gap: 10px;
+}
+
+.custom-input--half {
+    width: 188px;
+}
+
+.registration-form__input::placeholder {
+    color: #f6f6f7;
+    font-size: 14px;
+    padding: 14px 0 14px 16px;
+}
+
+.registration-form__input-image {
+    width: 188px;
+    padding-left: 32px;
+}
+
+.registration-form__captcha-label {
+    margin-right:251px ;
+    color: #FFF;
+}
+
+.registration-form__submit {
+    border: none;
+    border-radius: 60px;
+    background-color: #2f4594;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.registration-form__submit:hover{
+    background-color: #3356D7;
+}
+
+.registration__login-link {
+    font-size: 20px;
+    color: #1a2858;
+    cursor: pointer;
+    margin-left: 410px;
+    margin-bottom: 40px;
+    display: block;
+}
+
+.registration__login-link:hover {
+    color: #3356D7;
+}
+
+.registration-form__input:hover{
+    border: 2px solid #3356D7;
+}
+
+
+.registration-form__captcha {
+    margin-bottom: 7px;
+}

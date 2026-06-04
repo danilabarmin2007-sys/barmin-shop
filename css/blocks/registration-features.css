@@ -1,0 +1,33 @@
+.registration__features{
+    margin-top: 150px;
+    width: 500px;
+    color: #1E222E;
+}
+
+.registration__feature {
+    margin-bottom: 37px;
+    display: flex;
+    gap: 21px;
+    font-size: 20px;
+    
+}
+
+.registration__feature-number{
+    padding: 9px 15px 9px 15px;
+    background: #6478d1;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    color: #f0eff1;
+    font-size: 18px;
+}
+
+.registration__feature-three {
+    align-items: center;
+}
+
+.registration__features-title{
+    font-size: 24px;
+    font-weight: 400px; 
+    margin: 0 0 33px 0;
+}

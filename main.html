@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- <meta name="viewport" content="width=1481, height=849"> -->
+  <meta http-equiv="origin-trial" content="A...">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!-- Подключаем Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Подключаем наш код -->
+<script src="js/supabase.js"></script>
+<script src="js/main.js"></script>
+  <link rel="icon" href="images/sprite/iconn.ico">
+  <title> - BARMIN</title>
+  
+</head>
+<body class="body__main">
+    <div id="splash-screen">
+        <h1>BARMIN BEAUTY & COSMETICS</h1>
+    </div>
+
+
+    <header class="header__main">
+        <div class="header-menu">
+
+            <div class="header__menu-left">
+                <a class="header__menu-item" href="#contact">
+                    <svg  width="17" height="17" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="images/sprite.svg#footer-phone"></use>
+                    </svg>
+                    КОНТАКТЫ
+                </a>
+                <a class="header__menu-item" href="#tovar">
+                    <svg width="17" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="images/sprite.svg#tovar"></use>
+                    </svg>
+                    ТОВАРЫ
+                </a>
+            </div>
+
+            <div class="header__menu-icon">
+                <svg  width="205" height="60">
+                    <use xlink:href="images/sprite.svg#barmin-logo"></use>
+                </svg>
+            </div>
+
+            <div class="header__menu-right">
+                <a class="header__menu-item" href="#" id="loginBtn">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="images/sprite.svg#login-logo"></use>
+                    </svg>
+                    <span>ВОЙТИ</span>
+                </a>
+                <a class="header__menu-item" href="#" id="cartBtn">
+                    <svg width="17" height="19" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <use xlink:href="images/sprite.svg#corzina"></use>
+                    </svg>
+                    КОРЗИНА
+                </a>
+            </div>
+        </div>    
+    </header>
+
+
+    <!-- МОДАЛЬНОЕ ОКНО ВХОДА/РЕГИСТРАЦИИ (слайд сверху) -->
+    <div id="authModal" class="modal">
+    <div class="modal-slide">
+        <div class="modal-header">
+            <h2>Добро пожаловать</h2>
+            <span class="modal-close">&times;</span>
+        </div>
+        
+        <div class="modal-tabs">
+            <button class="tab-btn active" data-tab="login">Вход</button>
+            <button class="tab-btn" data-tab="register">Регистрация</button>
+        </div>
+        
+        <!-- ФОРМА ВХОДА -->
+        <div id="loginTab" class="tab-content active">
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="email" id="loginEmail" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" required>
+                    <label>Пароль</label>
+                </div>
+                <button type="submit" class="modal-submit">Войти</button>
+                <a href="#" class="forgot-password">Забыли пароль?</a>
+            </form>
+        </div>
+        
+        <!-- ФОРМА РЕГИСТРАЦИИ -->
+        <div id="registerTab" class="tab-content">
+            <form id="registerForm">
+                <div class="input-group">
+                    <input type="text" id="regName" required>
+                    <label>Имя</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="regEmail" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regPassword" required>
+                    <label>Пароль</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regConfirmPassword" required>
+                    <label>Повторите пароль</label>
+                </div>
+                <button type="submit" class="modal-submit">Зарегистрироваться</button>
+            </form>
+        </div>
+        
+        <div class="modal-footer">
+            <p>Нажимая кнопку, вы соглашаетесь с <a href="#">условиями использования</a></p>
+        </div>
+    </div>
+    </div>
+    <!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+    <div id="cartModal" class="modal cart-modal">
+        <div class="modal-slide cart-slide">
+            <div class="modal-header">
+                <h2> КОРЗИНА</h2>
+                <span class="modal-close cart-close">&times;</span>
+            </div>
+            <div id="cartItemsContainer" class="cart-items">
+                <div class="cart-empty">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#c4a794" stroke-width="1">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 12h8M12 8v8"/>
+                    </svg>
+                    <p>Ваша корзина пуста</p>
+                    <span>Добавьте товары, чтобы оформить заказ</span>
+                </div>
+            </div>
+            <div class="cart-total">
+                <div class="cart-total-row">
+                    <span>Товаров:</span>
+                    <span id="cartItemsCount">0</span>
+                </div>
+                <div class="cart-total-row">
+                    <span>Итого:</span>
+                    <span id="cartTotalPrice">0 ₽</span>
+                </div>
+                <button id="checkoutBtn" class="cart-checkout-btn">Оформить заказ</button>
+                <button id="clearCartBtn" class="cart-clear-btn">Очистить корзину</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="main-content">
+
+    <main>
+    <div class="header__fone">  
+        <div class="slider-container">
+            <img class="header__fone-img active" src="images/sprite/fone-one.png">
+            <img class="header__fone-img" src="images/sprite/fone-two.png">
+            <img class="header__fone-img" src="images/sprite/fone-three.png">
+            <div class="header__fone-texts">
+                <span class="header__fone-text">BARMIN BEAUTY & COSMETICS</span>
+                <span class="header__fone-bottom">для тех, кто ценит качество и стиль</span>
+                <!-- <div class="header__fone-buttons"> -->
+                    <a href="#tovar" class="header__fone-button" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; font-weight: normal;">
+                        ЗАКАЗАТЬ ТОВАР
+                    </a>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+    <div class="product-grid" id="tovar">
+        <div class="card">
+            <img src="images/sprite/cream.png" alt="Косметика для лица">
+            <h3>КОСМЕТИКА ДЛЯ ЛИЦА</h3>
+            <p>Кремы, сыворотки, тоники — всё для ухода за кожей лица.</p>
+            <a href="#face-cosmetika" class="btn">Посмотреть</a>
+        </div>
+        <div class="card">
+            <img src="images/sprite/hair-care.jpg" alt="Уход за волосами">
+            <h3>УХОД ЗА ВОЛОСАМИ</h3>
+            <p>Шампуни, кондиционеры, маски — для здоровых и красивых волос.</p>
+            <a href="#hair-care" class="btn">Посмотреть</a>
+        </div>
+        <div class="card">
+            <img src="images/sprite/face-cosmetics.png" alt="Декоративная косметика">
+            <h3>ДЕКОРАТИВНАЯ КОСМЕТИКА</h3>
+            <p>Помады, тени, туши — создавайте свой образ с нами!</p>
+            <a href="#decorative-cosmetics" class="btn">Посмотреть</a>
+        </div>
+        <div class="card">
+            <img src="images/sprite/body-care.jpg" alt="Уход за телом">
+            <h3>УХОД ЗА ТЕЛОМ</h3>
+            <p>Лосьоны, скрабы, масла — для идеального состояния кожи.</p>
+            <a href="#body-care" class="btn">Посмотреть</a>
+        </div>
+    </div>
+
+    <!-- косметика для лица -->
+    <div class="aboutus">
+        <div class="catalog-wrapper">
+    <!-- заголовок блока с фразой "КОСМЕТИКА ДЛЯ ЛИЦА" как в задании -->
+    <div id="face-cosmetika" class="catalog-title">
+        <h2>КОСМЕТИКА ДЛЯ ЛИЦА</h2>
+        <p>Кремы, сыворотки, тоники — всё для ухода за кожей лица.</p>
+    </div>
+
+    <!-- ГЛАВНАЯ СЕТКА: catalog-grid (2 ряда × 3 колонки = 6 карточек) -->
+    <div class="catalog-grid">
+    <!-- 1. COSRX Advanced Snail 96 Mucin Power Essence -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">COSRX</span>
+            <div class="product-name">Advanced Snail 96 Mucin Power Essence</div>
+            <div class="product-short">Эссенция с муцином улитки 96% — восстановление, увлажнение, сияние</div>
+            <div class="price-row">
+                <span class="current-price">2 750 ₽</span>
+                <span class="old-price">3 490 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+
+    <!-- 2. Beauty of Joseon Revive Serum -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense2.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">Beauty of Joseon</span>
+            <div class="product-name product-name-one">Revive Serum + Ginseng & Retinal</div>
+            <div class="product-short">Сыворотка с ретиналом и женьшенем, антивозрастной уход</div>
+            <div class="price-row">
+                <span class="current-price">3 190 ₽</span>
+                <span class="old-price">4 250 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+
+    <!-- 3. La Roche-Posay Cicaplast Baume B5+ -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense3.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">La Roche-Posay</span>
+            <div class="product-name product-name-one">Cicaplast Baume B5+</div>
+            <div class="product-short">Восстанавливающий бальзам для лица, успокаивает и регенерирует</div>
+            <div class="price-row">
+                <span class="current-price">1 290 ₽</span>
+                <span class="old-price">1 590 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+
+    <!-- 4. SOME BY MI AHA-BHA-PHA 30 Days Miracle Toner -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense4.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">SOME BY MI</span>
+            <div class="product-name">AHA-BHA-PHA 30 Days Miracle Toner</div>
+            <div class="product-short">Тонер с кислотами для мягкого обновления, поры и текстура</div>
+            <div class="price-row">
+                <span class="current-price">1 890 ₽</span>
+                <span class="old-price">2 390 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+
+    <!-- 5. SKIN1004 Madagascar Centella Asiatica Ampoule -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense5.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">SKIN1004</span>
+            <div class="product-name">Madagascar Centella Asiatica Ampoule</div>
+            <div class="product-short">Успокаивающая ампула с центеллой, для чувствительной кожи</div>
+            <div class="price-row">
+                <span class="current-price">2 150 ₽</span>
+                <span class="old-price">2 690 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+
+    <!-- 6. ROUND LAB 1025 Dokdo Toner -->
+    <div class="product-tile">
+        <div class="product-media">
+            <img  src="images/sprite/esense6.png">
+        </div>
+        <div class="product-details">
+            <span class="brand-tag">ROUND LAB</span>
+            <div class="product-name">1025 Dokdo Toner</div>
+            <div class="product-short">Увлажняющий тонер с глубоководной водой, низкомолекулярный</div>
+            <div class="price-row">
+                <span class="current-price">1 680 ₽</span>
+                <span class="old-price">2 100 ₽</span>
+            </div>
+            <a href="#" class="btn-view">Купить</a>
+        </div>
+    </div>
+    </div>
+</div>
+    </div> 
+    <div class="faq-container">
+    <div class="faq-title">
+         Частые вопросы
+        <span>нажми на вопрос</span>
+    </div>
+    <div class="subhead-wrapper">
+        <div class="subhead"> BARMIN BEAUTY & COSMETICS </div>
+    </div>
+    
+    <!-- Вопрос 1 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 1. Подходит ли тонер для чувствительной кожи?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, идеально подходит.</strong> Формула тонера не содержит спирта, агрессивных отдушек и синтетических красителей. Аква-брэ (аква) и мягкие ухаживающие компоненты успокаивают кожу, снимают покраснения и бережно укрепляют гидролипидный барьер. Рекомендуем перед первым применением протестировать средство на сгибе локтя.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 2 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 2. Через сколько виден результат?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p>✨ <strong>Первые улучшения — через 7–10 дней.</strong> Уже через неделю кожа становится более увлажненной, тон выравнивается, уменьшается шелушение. Полный «30 Days Miracle» эффект (подтянутость, профилактика морщин, улучшение формы лица) достигается при регулярном использовании утром и вечером в течение 30 дней.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 3 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 3. Можно ли наносить средство на область вокруг глаз?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, можно.</strong> Тонер деликатно работает даже на нежной коже век. Наносите его легкими похлопывающими движениями безымянного пальца, избегая сильного трения. Это поможет устранить сухость, мелкие «гусиные лапки» и улучшить тонус кожи вокруг глаз.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 4 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 4. Нужно ли смывать тонер после нанесения?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Нет, это не смываемый продукт.</strong> Тонер — завершающий этап очищения и первый этап увлажнения. Нанесите его на чистую кожу лица, шеи и декольте, дайте впитаться 40–60 секунд, затем сразу наносите сыворотку или крем. Не смывайте водой!</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 5 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 5. С какого возраста можно использовать?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>С 18 лет.</strong> Для молодой кожи до 25 лет тонер дарит легкое увлажнение и профилактику первых сухостей. Для возраста 25+ он помогает бороться с мимическими морщинами, тусклым цветом лица и потерей упругости. Универсальный состав подходит для всех взрослых типов кожи.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 6 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 6. Есть ли в составе парабены, силиконы, отдушка?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Без парабенов, силиконов и искусственных красителей.</strong> Отдушка — натуральная, легкая, получена из растительных экстрактов. Состав безопасен даже для реактивной и склонной к аллергии кожи. Протестировано дерматологически.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Вопрос 7 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 7. Как правильно хранить тонер?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Хранить при температуре от +5 до +25°C</strong> в сухом месте, защищенном от прямых солнечных лучей. После использования плотно закрывайте крышку. Срок годности после вскрытия — 12 месяцев. Берегите от детей.</p>
+            </div>
+        </details>
+    </div>
+    
+    <!-- Бонус вопрос: гарантия (как в исходном тексте) -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span> 8. Действительно ли гарантия 2 года на все товары?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, 2 года официальной гарантии.</strong> В течение этого срока при обнаружении заводского брака или несоответствия описанию мы заменим товар или вернем деньги. Гарантия распространяется на все средства бренда, включая тонер «30 Days Miracle Toner».</p>
+            </div>
+        </details>
+    </div>
+    
+    <div class="small-note">
+        🧴 Косметика для лица — твой ежедневный ритуал красоты 🌸
+    </div>
+    </div>
+
+    <!-- уход за волосами -->
+    <div class="aboutus">
+    <div class="catalog-wrapper">
+        <!-- заголовок блока -->
+        <div id="hair-care" class="catalog-title">
+            <h2>УХОД ЗА ВОЛОСАМИ</h2>
+            <p>Шампуни, кондиционеры, маски — для здоровых и красивых волос.</p>
+        </div>
+
+        <!-- СЕТКА: 2 ряда × 3 колонки = 6 карточек -->
+        <div class="catalog-grid">
+            
+            <!-- 1. Kérastase Genesis Shampoo -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair1.png" alt="Kerastase шампунь">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Kérastase</span>
+                    <div class="product-name">Genesis Bain Hydra-Fortifiant</div>
+                    <div class="product-short">Укрепляющий шампунь против выпадения, нежный уход и объем</div>
+                    <div class="price-row">
+                        <span class="current-price">3 450 ₽</span>
+                        <span class="old-price">4 200 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 2. Moroccanoil Treatment Original -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair2.png" alt="Moroccanoil масло">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Moroccanoil</span>
+                    <div class="product-name">Treatment Original</div>
+                    <div class="product-short">Восстанавливающее масло с арганой, блеск и питание без утяжеления</div>
+                    <div class="price-row">
+                        <span class="current-price">2 890 ₽</span>
+                        <span class="old-price">3 590 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 3. L'Oréal Professionnel Absolut Repair Mask -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair3.png" alt="Loreal маска">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">L'Oréal Pro</span>
+                    <div class="product-name">Absolut Repair Mask Gold</div>
+                    <div class="product-short">Интенсивная маска с золотым квиноа, восстановление и питание</div>
+                    <div class="price-row">
+                        <span class="current-price">2 490 ₽</span>
+                        <span class="old-price">3 190 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 4. Olaplex No.3 Hair Perfector -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair4.png" alt="Olaplex">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Olaplex</span>
+                    <div class="product-name">No.3 Hair Perfector</div>
+                    <div class="product-short">Домашний уход для восстановления связей, сила и эластичность</div>
+                    <div class="price-row">
+                        <span class="current-price">3 150 ₽</span>
+                        <span class="old-price">4 100 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 5. R+Co Gemstone Shampoo -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair5.png" alt="R+Co шампунь">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">R+Co</span>
+                    <div class="product-name">Gemstone Shampoo</div>
+                    <div class="product-short">Придает зеркальный блеск, увлажняет и разглаживает волосы</div>
+                    <div class="price-row">
+                        <span class="current-price">2 690 ₽</span>
+                        <span class="old-price">3 290 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 6. Maria Nila Structure Repair Conditioner -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/hair6.png" alt="Maria Nila кондиционер">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Maria Nila</span>
+                    <div class="product-name">Structure Repair Conditioner</div>
+                    <div class="product-short">Восстанавливающий кондиционер, облегчает расчесывание</div>
+                    <div class="price-row">
+                        <span class="current-price">1 990 ₽</span>
+                        <span class="old-price">2 490 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    <div class="faq-container">
+    <div class="faq-title">
+        Частые вопросы
+        <span>нажми на вопрос</span>
+    </div>
+    <div class="subhead-wrapper">
+        <div class="subhead">BARMIN BEAUTY & COSMETICS — УХОД ЗА ВОЛОСАМИ</div>
+    </div>
+
+    <!-- Вопрос 1 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>1. Подходит ли шампунь для окрашенных волос?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, все шампуни из нашей линейки безопасны для окрашенных волос.</strong> Формула не содержит сульфатов и агрессивных ПАВ, которые вымывают пигмент. Мягкие очищающие компоненты бережно удаляют загрязнения, сохраняя яркость и стойкость цвета.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 2 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>2. Через сколько виден результат от масок для волос?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p>✨ <strong>Первые улучшения — после 2-3 применений.</strong> Уже после первой маски волосы становятся более гладкими и послушными. Полное восстановление (увлажнение, эластичность, уменьшение ломкости) достигается при регулярном использовании 1-2 раза в неделю в течение 3-4 недель.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 3 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>3. Можно ли наносить масло на корни волос?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Зависит от типа масла и вашей кожи головы.</strong> Легкие масла (арганы, жожоба, кокоса) можно наносить на корни при сухой коже головы — они увлажняют и питают. Тяжелые масла (касторовое, репейное) рекомендуем наносить только на длину и кончики, чтобы не забивать поры и не создавать жирный блеск.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 4 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>4. Нужно ли смывать кондиционер полностью?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, кондиционер нужно тщательно смывать прохладной водой.</strong> Остатки продукта могут утяжелять волосы, делать их жирными у корней и лишать объема. Исключение — leave-in кондиционеры (без смывания), на упаковке которых есть специальная отметка.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 5 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>5. С какого возраста можно использовать средства для волос?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>С 3-4 лет (детские шампуни) и с 12+ для взрослых линий.</strong> Для детей до 12 лет рекомендуем мягкие бессульфатные шампуни с нейтральным pH. С 14-16 лет можно подключать маски и сыворотки. Антивозрастные средства для волос (против истончения и выпадения) подходят с 25 лет.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 6 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>6. Есть ли в составе парабены, силиконы, отдушка?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Все средства — без парабенов, большинство без силиконов.</strong> Отдушки — натуральные или гипоаллергенные, мягкие, получены из эфирных масел. Несколько уходовых позиций содержат легкие силиконы (для разглаживания и блеска), это всегда указано в описании товара. Состав безопасен для реактивной и чувствительной кожи головы.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 7 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>7. Как правильно хранить средства для волос?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Хранить при температуре от +5 до +25°C</strong> в сухом месте, защищенном от прямых солнечных лучей. Флаконы рекомендуется хранить в вертикальном положении. Срок годности после вскрытия — 12 месяцев. Не допускайте попадания воды во флакон.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 8 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>8. Действительно ли гарантия 2 года на все товары?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, 2 года официальной гарантии.</strong> В течение этого срока при обнаружении заводского брака или несоответствия описанию мы заменим товар или вернем деньги. Гарантия распространяется на все средства: шампуни, кондиционеры, маски, масла, сыворотки и спреи.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 9 (дополнительный) -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>9. Как часто можно мыть голову вашими шампунями?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Шампуни подходят для ежедневного использования.</strong> Благодаря мягкой бессульфатной формуле они не пересушивают кожу головы и волосы. Для жирного типа кожи рекомендуем мыть голову через день, для сухого — 1-2 раза в неделю. Ориентируйтесь на свои ощущения и тип волос.</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="small-note">
+        💇‍♀️ Уход за волосами — твой путь к здоровым и сияющим локонам 🌟
+    </div>
+    </div>
+
+    <!-- декоративная косметика -->
+    <div class="aboutus">
+    <div class="catalog-wrapper">
+        <!-- заголовок блока -->
+        <div id="decorative-cosmetics" class="catalog-title">
+            <h2>ДЕКОРАТИВНАЯ КОСМЕТИКА</h2>
+            <p>Помады, тени, туши — создавайте свой образ с нами!</p>
+        </div>
+
+        <!-- СЕТКА: 2 ряда × 3 колонки = 6 карточек -->
+        <div class="catalog-grid">
+            
+            <!-- 1. Dior Rouge 999 Velvet -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup1.png" alt="Dior помада">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Dior</span>
+                    <div class="product-name">Rouge Dior 999 Velvet</div>
+                    <div class="product-short">Культовая матовая помада, насыщенный красный оттенок</div>
+                    <div class="price-row">
+                        <span class="current-price">3 890 ₽</span>
+                        <span class="old-price">4 600 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 2. Huda Beauty Rose Quartz Palette -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup2.png" alt="Huda Beauty палетка">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Huda Beauty</span>
+                    <div class="product-name">Rose Quartz Eyeshadow Palette</div>
+                    <div class="product-short">18 оттенков розового кварца, матовые и шиммерные текстуры</div>
+                    <div class="price-row">
+                        <span class="current-price">5 490 ₽</span>
+                        <span class="old-price">6 990 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 3. Lancôme Lash Idôle Mascara -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup3.png" alt="Lancôme тушь">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Lancôme</span>
+                    <div class="product-name">Lash Idôle Mascara</div>
+                    <div class="product-short">Подкручивающая тушь с эффектом веерных ресниц</div>
+                    <div class="price-row">
+                        <span class="current-price">2 790 ₽</span>
+                        <span class="old-price">3 490 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 4. Armani Beauty Luminous Silk Foundation -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup4.png" alt="Armani тональный крем">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Giorgio Armani</span>
+                    <div class="product-name">Luminous Silk Foundation</div>
+                    <div class="product-short">Легендарный тональный крем с сияющим финишем</div>
+                    <div class="price-row">
+                        <span class="current-price">5 190 ₽</span>
+                        <span class="old-price">6 290 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 5. NARS Blush Orgasm -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup5.png" alt="NARS румяна">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">NARS</span>
+                    <div class="product-name">Blush Orgasm</div>
+                    <div class="product-short">Персиково-розовые румяна с золотистым шиммером</div>
+                    <div class="price-row">
+                        <span class="current-price">3 290 ₽</span>
+                        <span class="old-price">4 150 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 6. Fenty Beauty Gloss Bomb -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/makeup6.png" alt="Fenty Beauty блеск">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Fenty Beauty</span>
+                    <div class="product-name">Gloss Bomb Universal Lip Luminizer</div>
+                    <div class="product-short">Ультра-блеск, увлажнение и объем губ в оттенке Fenty Glow</div>
+                    <div class="price-row">
+                        <span class="current-price">2 190 ₽</span>
+                        <span class="old-price">2 890 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    <div class="faq-container">
+    <div class="faq-title">
+        Частые вопросы
+        <span>нажми на вопрос</span>
+    </div>
+    <div class="subhead-wrapper">
+        <div class="subhead">BARMIN BEAUTY & COSMETICS — ДЕКОРАТИВНАЯ КОСМЕТИКА</div>
+    </div>
+
+    <!-- Вопрос 1 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>1. Как подобрать тональный крем по цветотипу?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Для холодного подтона (розовые вены) — бежевые оттенки с розовым подтоном.</strong> Для теплого (зеленые вены) — желтоватые или оливковые. Нейтральный подтон — универсальные оттенки. Лучший способ: нанести 3 оттенка на линию челюсти и посмотреть при дневном свете, какой сливается с кожей.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 2 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>2. Как сделать стойкий макияж на весь день?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p>✨ <strong>4 главных правила:</strong> 1) Праймер под макияж, 2) Фиксирующая пудра или спрей-фиксатор, 3) Стойкие формулы (матовые помады, водостойкая тушь), 4) Не трогайте лицо руками в течение дня. Для жирной кожи используйте матирующие салфетки вместо наслаивания пудры.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 3 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>3. Можно ли красить ресницы тушью каждый день?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, если используете качественную тушь и правильно снимаете макияж.</strong> Обязательно удаляйте тушь специальным средством (не мылом!), не трите ресницы. Раз в 1-2 дня наносите касторовое или репейное масло на ресницы на ночь. Меняйте тушь каждые 3-4 месяца, даже если она не закончилась.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 4 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>4. Нужны ли кисти для нанесения теней?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, аппликаторы из палеток подходят только для базы.</strong> Кисти дают растушевку, глубину цвета и контроль над нанесением. Минимальный набор: плоская кисть для набивки цвета, пушистая бочонок для растушевки, скошенная для подводки. Регулярно мойте кисти раз в неделю мягким шампунем.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 5 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>5. Как правильно снимать водостойкий макияж?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Только двухфазной жидкостью или гидрофильным маслом.</strong> Обычная мицеллярная вода не справится. Нанесите средство на ватный диск, приложите к закрытому глазу на 20-30 секунд, затем аккуратно снимите, не растирая. Остатки смойте гелем для умывания. Никогда не смывайте водостойкую косметику мылом!</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 6 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>6. Гарантия на косметику?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>2 года гарантии на всю декоративную косметику.</strong> При обнаружении заводского брака (трещина, сломанный стик, высыпание пигмента) — замена или возврат средств. Гарантия не распространяется на повреждения из-за неправильного хранения или истечения срока годности.</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="small-note">
+        💋 Создавай свой уникальный образ с BARMIN 💄
+    </div>
+    </div>
+    
+    <!-- уход за телом -->
+    <div class="aboutus">
+    <div class="catalog-wrapper">
+        <!-- заголовок блока -->
+        <div id="body-care" class="catalog-title">
+            <h2>УХОД ЗА ТЕЛОМ</h2>
+            <p>Лосьоны, скрабы, масла — для идеального состояния кожи.</p>
+        </div>
+
+        <!-- СЕТКА: 2 ряда × 3 колонки = 6 карточек -->
+        <div class="catalog-grid">
+            
+            <!-- 1. Sol de Janeiro Brazilian Bum Bum Cream -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body1.png" alt="Sol de Janeiro крем">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Sol de Janeiro</span>
+                    <div class="product-name">Brazilian Bum Bum Cream</div>
+                    <div class="product-short">Подтягивающий крем с ароматом соленой карамели и фисташек</div>
+                    <div class="price-row">
+                        <span class="current-price">3 490 ₽</span>
+                        <span class="old-price">4 390 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 2. L'Occitane Almond Shower Oil -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body2.png" alt="L'Occitane масло для душа">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">L'Occitane</span>
+                    <div class="product-name">Almond Shower Oil</div>
+                    <div class="product-short">Масло для душа, нежно очищает и дарит мягкость</div>
+                    <div class="price-row">
+                        <span class="current-price">2 190 ₽</span>
+                        <span class="old-price">2 890 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 3. Frank Body Original Coffee Scrub -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body3.png" alt="Frank Body скраб">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Frank Body</span>
+                    <div class="product-name">Original Coffee Scrub</div>
+                    <div class="product-short">Кофейный скраб против целлюлита, отшелушивание</div>
+                    <div class="price-row">
+                        <span class="current-price">1 790 ₽</span>
+                        <span class="old-price">2 390 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 4. Bio-Oil Skincare Oil -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body4.png" alt="Bio-Oil масло">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Bio-Oil</span>
+                    <div class="product-name">Skincare Oil</div>
+                    <div class="product-short">Масло для улучшения эластичности, рубцов и стрий</div>
+                    <div class="price-row">
+                        <span class="current-price">1 390 ₽</span>
+                        <span class="old-price">1 890 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 5. Rituals The Ritual of Sakura Body Cream -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body5.png" alt="Rituals крем">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Rituals</span>
+                    <div class="product-name">The Ritual of Sakura Body Cream</div>
+                    <div class="product-short">Питательный крем с ароматом сакуры и органическим рисом</div>
+                    <div class="price-row">
+                        <span class="current-price">2 490 ₽</span>
+                        <span class="old-price">3 190 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+
+            <!-- 6. Weleda Birch Body Scrub -->
+            <div class="product-tile">
+                <div class="product-media">
+                    <img src="images/sprite/body6.png" alt="Weleda скраб">
+                </div>
+                <div class="product-details">
+                    <span class="brand-tag">Weleda</span>
+                    <div class="product-name">Birch Body Scrub</div>
+                    <div class="product-short">Тонизирующий скраб с березовыми листьями, улучшает микроциркуляцию</div>
+                    <div class="price-row">
+                        <span class="current-price">1 650 ₽</span>
+                        <span class="old-price">2 150 ₽</span>
+                    </div>
+                    <a href="#" class="btn-view">Купить</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+    <div class="faq-container">
+    <div class="faq-title">
+        Частые вопросы
+        <span>нажми на вопрос</span>
+    </div>
+    <div class="subhead-wrapper">
+        <div class="subhead">BARMIN BEAUTY & COSMETICS — УХОД ЗА ТЕЛОМ</div>
+    </div>
+
+    <!-- Вопрос 1 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>1. Как часто нужно использовать скраб для тела?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Рекомендуется 1-2 раза в неделю.</strong> Для жирной или плотной кожи (спина, зона декольте) — 2 раза. Для сухой и чувствительной — 1 раз в 7-10 дней. Не скрабируйте кожу с повреждениями, воспалениями, свежими загаром. После скраба обязательно наносите увлажняющий лосьон или масло.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 2 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>2. Помогает ли кофейный скраб от целлюлита?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p>✨ <strong>Да, кофеин улучшает микроциркуляцию и лимфодренаж.</strong> Регулярное использование кофейного скраба (2 раза в неделю в течение 2-3 месяцев) в сочетании с массажем и физической активностью делает "апельсиновую корку" менее заметной. Но скраб — это не панацея, нужен комплексный подход.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 3 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>3. Масло для душа — это мыло или нет?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Нет, масло для душа мягче и не сушит кожу.</strong> Оно содержит ПАВ растительного происхождения и питательные масла, которые очищают, но не нарушают гидролипидный барьер. После масла кожа не стянута, наоборот — увлажнена. Подходит для очень сухой, атопичной и возрастной кожи.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 4 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>4. Как правильно наносить крем для тела?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Наносите на слегка влажную кожу после душа.</strong> Так крем лучше впитывается и дольше удерживает влагу. Движения — массажные, снизу вверх (по лимфотоку): от стоп к бедрам, от кистей к плечам. Особое внимание уделяйте локтям, коленям и пяткам — там кожа суше.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 5 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>5. Помогает ли Bio-Oil от растяжек?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, Bio-Oil клинически доказан для профилактики и уменьшения стрий.</strong> Начинайте использовать с первого триместра беременности или при резком наборе веса. Массируйте проблемные зоны (живот, бедра, грудь) 2 раза в день. Свежие растяжки (розовые/фиолетовые) уходят лучше, чем старые белые.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 6 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>6. Есть ли в составе парабены, сульфаты, искусственные красители?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Вся линейка — без парабенов, большинство без сульфатов (SLS/SLES).</strong> Натуральные скрабы (кофе, сахар, соль, абрикосовые косточки) не содержат пластиковых частиц, вредных для экологии. Отдушки — натуральные эфирные масла или гипоаллергенные ароматические композиции. Все средства дерматологически протестированы.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 7 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>7. Можно ли использовать масло для тела на лице?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Не рекомендуется, если в инструкции не указано обратное.</strong> Масла для тела имеют более плотную текстуру и могут забивать поры на лице, вызывая высыпания. Для лица используйте специализированные масла с пометкой "non-comedogenic". Исключение — некоторые универсальные масла (Bio-Oil, кокосовое рафинированное).</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 8 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>8. Как правильно хранить средства для тела?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Хранить при температуре от +5 до +25°C, вдали от прямых солнечных лучей.</strong> Скрабы в открытых банках лучше использовать в течение 6-8 месяцев после вскрытия. Масла для душа и лосьоны — до 12 месяцев. Не храните средства в ванной, если там постоянно влажно и жарко — это ускоряет порчу.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 9 -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>9. Действительно ли гарантия 2 года на все товары?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Да, 2 года официальной гарантии.</strong> В течение этого срока при обнаружении заводского брака (расслоение, изменение запаха/цвета, неправильная консистенция) или несоответствия описанию мы заменим товар или вернем деньги. Гарантия распространяется на все средства: скрабы, масла, лосьоны, кремы для тела.</p>
+            </div>
+        </details>
+    </div>
+
+    <!-- Вопрос 10 (дополнительный) -->
+    <div class="faq-item">
+        <details>
+            <summary>
+                <span>10. Как часто можно мыться маслом для душа?</span>
+                <span class="faq-icon">+</span>
+            </summary>
+            <div class="faq-answer">
+                <p><strong>Ежедневно — да, если у вас сухая или нормальная кожа.</strong> Для жирной кожи спины и зоны декольте чередуйте масло с гелем для душа 2-3 раза в неделю. Масло для душа экономично: достаточно 1-2 нажатий дозатора на всю мочалку. После использования не забудьте хорошо смыть.</p>
+            </div>
+        </details>
+    </div>
+
+    <div class="small-note">
+        🧴 Уход за телом — твой путь к бархатистой и сияющей коже каждый день ✨
+    </div>
+    </div>
+    </main>
+
+    </div>
+ <!-- ФУТЕР -->
+    <footer class="footer" id="contact">
+    <div class="footer-container">
+        <div class="footer-row">
+            <!-- Логотип и описание -->
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <svg width="180" height="50" viewBox="0 0 200 50" fill="none">
+                        <text x="0" y="35" font-family="Georgia, serif" font-size="28" font-weight="bold" fill="#e6d7d1" letter-spacing="3">BARMIN</text>
+                        <text x="0" y="48" font-family="Arial, sans-serif" font-size="9" fill="#c4a794" letter-spacing="2">BEAUTY & COSMETICS</text>
+                    </svg>
+                </div>
+                <p class="footer-description">Профессиональная косметика для тех, кто ценит качество, натуральный состав и безупречный результат. Заботимся о вашей красоте с 2024 года.</p>
+                <div class="footer-social">
+                    <!-- Telegram -->
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </a>
+                    <!-- WhatsApp -->
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21z"/>
+                            <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"/>
+                        </svg>
+                    </a>
+                    <!-- VK -->
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M22 16c-.5-1-2-2.5-3.5-3 1-1 2-2.5 2.5-4 .5-1.5 0-2.5-1-2.5h-2c-1 0-1.5.5-2 1.5-.5 1-1 2-2 3-.5.5-1 1-1.5 1-1 0-1.5-1-1.5-2.5V6.5c0-1-.5-1.5-1.5-1.5H9c-1 0-1.5.5-1.5 1 0 .5 0 1 .5 1.5v3c0 .5 0 1-.5 1-.5 0-1-.5-1.5-1-.5-1-1.5-2.5-2-3.5-.5-.5-1-1-2-1H2c-1 0-1 .5-1 1 .5 1 1 2.5 2 4 2 3 4 5 7 7 .5.5 1 1 2 1h2c1 0 1.5-.5 1.5-1 0-.5-.5-1-.5-1.5 0-.5 0-1 .5-1.5 1-.5 2 1 3 2 .5.5 1 1 1.5 1h2c1 0 1.5-.5 1-1.5z"/>
+                        </svg>
+                    </a>
+                    <!-- Instagram -->
+                    <a href="#" class="social-link">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="4"/>
+                            <circle cx="12" cy="12" r="4"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.51"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Каталог -->
+            <div class="footer-col">
+                <h4 class="footer-title">КАТАЛОГ</h4>
+                <ul class="footer-links">
+                    <li><a href="#face-cosmetika">Косметика для лица</a></li>
+                    <li><a href="#hair-care">Уход за волосами</a></li>
+                    <li><a href="#decorative-cosmetics">Декоративная косметика</a></li>
+                    <li><a href="#body-care">Уход за телом</a></li>
+                </ul>
+            </div>
+
+            <!-- Помощь -->
+            <div class="footer-col">
+                <h4 class="footer-title">ПОМОЩЬ</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Возврат и обмен</a></li>
+                    <li><a href="#">Частые вопросы</a></li>
+                    <li><a href="#">Политика конфиденциальности</a></li>
+                </ul>
+            </div>
+
+            <!-- Контакты -->
+            <div class="footer-col">
+                <h4 class="footer-title">КОНТАКТЫ</h4>
+                <ul class="footer-contacts">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        <span>+7 (800) 123-45-67</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        <span>info@barmin-beauty.ru</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <span>г. Саранск, ул. Севастопольская, д. 27/4</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 4.6C18.3 3.2 16 2 12 2s-6.3 1.2-7.4 2.6S2 8.6 2 12c0 3.4 1.2 5.7 2.6 7.4S8.6 22 12 22c2.4 0 4-.6 5.6-1.4"/>
+                        </svg>
+                        <span>Ежедневно: 10:00 – 21:00</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-content">
+                <p>&copy; 2024 BARMIN BEAUTY & COSMETICS. Все права защищены.</p>
+                <div class="footer-payment">
+                    <span>Принимаем к оплате:</span>
+                    <div class="payment-icons">
+                        <span>Visa</span>
+                        <span>Mastercard</span>
+                        <span>МИР</span>
+                        <span>SBP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+     <div id="backToCatalogBtn" class="back-to-catalog">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 19V5M5 12L12 5L19 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </div>
+
+
+    
+    <script>
+    // ========== КОРЗИНА ==========
+    (function() {
+        // Ключ для хранения в localStorage
+        const CART_STORAGE_KEY = 'barmin_cart';
+        
+        // Загружаем корзину из localStorage
+        let cart = [];
+        
+        function loadCart() {
+            const saved = localStorage.getItem(CART_STORAGE_KEY);
+            if (saved) {
+                try {
+                    cart = JSON.parse(saved);
+                } catch(e) {
+                    cart = [];
+                }
+            }
+            if (!cart || !cart.length) cart = [];
+            renderCart();
+        }
+        
+        function saveCart() {
+            localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+        }
+        
+        window.addToCart = function(product) {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    brand: product.brand,
+                    name: product.name,
+                    price: product.price,
+                    img: product.img,
+                    quantity: 1
+                });
+            }
+            saveCart();
+            renderCart();
+            showToast(product.brand + ' — добавлен в корзину');
+        };
+        
+        window.updateQuantity = function(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            saveCart();
+            renderCart();
+        };
+        
+        window.removeItem = function(id) {
+            cart = cart.filter(i => i.id !== id);
+            saveCart();
+            renderCart();
+            showToast('Товар удалён из корзины');
+        };
+        
+        function getTotalPrice() {
+            return cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        }
+        
+        function getTotalItems() {
+            return cart.reduce((sum, item) => sum + item.quantity, 0);
+        }
+        
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const itemsCountSpan = document.getElementById('cartItemsCount');
+            const totalPriceSpan = document.getElementById('cartTotalPrice');
+            
+            if (!container) return;
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="cart-empty">' +
+                    '<svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#c4a794" stroke-width="1">' +
+                    '<circle cx="12" cy="12" r="10"/>' +
+                    '<path d="M8 12h8M12 8v8"/>' +
+                    '</svg>' +
+                    '<p>Ваша корзина пуста</p>' +
+                    '<span>Добавьте товары, чтобы оформить заказ</span>' +
+                    '</div>';
+            } else {
+                let html = '';
+                for (let i = 0; i < cart.length; i++) {
+                    const item = cart[i];
+                    html += '<div class="cart-item">' +
+                        '<div class="cart-item-img">' +
+                        '<img src="' + item.img + '" alt="' + item.name + '">' +
+                        '</div>' +
+                        '<div class="cart-item-info">' +
+                        '<div class="cart-item-brand">' + item.brand + '</div>' +
+                        '<div class="cart-item-name">' + (item.name.length > 40 ? item.name.substring(0, 37) + '...' : item.name) + '</div>' +
+                        '<div class="cart-item-price">' + item.price.toLocaleString() + ' ₽</div>' +
+                        '</div>' +
+                        '<div class="cart-item-actions">' +
+                        '<div class="cart-item-quantity">' +
+                        '<button class="quantity-btn" onclick="updateQuantity(\'' + item.id + '\', -1)">−</button>' +
+                        '<span>' + item.quantity + '</span>' +
+                        '<button class="quantity-btn" onclick="updateQuantity(\'' + item.id + '\', 1)">+</button>' +
+                        '</div>' +
+                        '<button class="remove-item" onclick="removeItem(\'' + item.id + '\')">Удалить</button>' +
+                        '</div>' +
+                        '</div>';
+                }
+                container.innerHTML = html;
+            }
+            
+            if (itemsCountSpan) itemsCountSpan.textContent = getTotalItems();
+            if (totalPriceSpan) totalPriceSpan.textContent = getTotalPrice().toLocaleString() + ' ₽';
+        }
+        
+        function showToast(message) {
+            const existingToast = document.querySelector('.toast-notification');
+            if (existingToast) existingToast.remove();
+            
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification';
+            toast.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+                '<path d="M20 6L9 17l-5-5"/>' +
+                '</svg><span>' + message + '</span>';
+            document.body.appendChild(toast);
+            
+            setTimeout(function() {
+                toast.classList.add('hide');
+                setTimeout(function() { toast.remove(); }, 300);
+            }, 2000);
+        }
+        
+        // Открытие модалки корзины
+        const cartModal = document.getElementById('cartModal');
+        const cartBtn = document.getElementById('cartBtn');
+        
+        console.log('Кнопка корзины:', cartBtn);
+        console.log('Модальное окно:', cartModal);
+        
+        if (cartBtn && cartModal) {
+            cartBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                cartModal.style.display = 'flex';
+                setTimeout(function() {
+                    cartModal.classList.add('show');
+                }, 10);
+                console.log('Клик по корзине');
+            });
+        } else {
+            console.log('Кнопка или модалка не найдены!');
+        }
+        
+        // Закрытие корзины
+        const cartCloseBtn = document.querySelector('.cart-close');
+        if (cartCloseBtn) {
+            cartCloseBtn.addEventListener('click', function() {
+                if (cartModal) {
+                    cartModal.classList.remove('show');
+                    setTimeout(function() { cartModal.style.display = 'none'; }, 400);
+                }
+            });
+        }
+        
+        // Оформление заказа
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', function() {
+                if (cart.length === 0) {
+                    alert('Корзина пуста! Добавьте товары.');
+                    return;
+                }
+                alert('Спасибо за заказ!\nСумма: ' + getTotalPrice().toLocaleString() + ' ₽\nНаш менеджер свяжется с вами.');
+                cart = [];
+                saveCart();
+                renderCart();
+                if (cartModal) {
+                    cartModal.classList.remove('show');
+                    setTimeout(function() { cartModal.style.display = 'none'; }, 400);
+                }
+            });
+        }
+        
+        // Очистка корзины
+        const clearCartBtn = document.getElementById('clearCartBtn');
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', function() {
+                if (cart.length > 0 && confirm('Очистить корзину?')) {
+                    cart = [];
+                    saveCart();
+                    renderCart();
+                    showToast('Корзина очищена');
+                }
+            });
+        }
+        
+        // Закрытие по Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && cartModal && cartModal.style.display === 'flex') {
+                cartModal.classList.remove('show');
+                setTimeout(function() { cartModal.style.display = 'none'; }, 400);
+            }
+        });
+        
+        // Закрытие по клику на фон
+        if (cartModal) {
+            cartModal.addEventListener('click', function(e) {
+                if (e.target === cartModal) {
+                    cartModal.classList.remove('show');
+                    setTimeout(function() { cartModal.style.display = 'none'; }, 400);
+                }
+            });
+        }
+        
+        // Обработка кнопок "Купить"
+        function attachBuyButtons() {
+            const buyButtons = document.querySelectorAll('.btn-view');
+            console.log('Найдено кнопок "Купить":', buyButtons.length);
+            for (let i = 0; i < buyButtons.length; i++) {
+                const btn = buyButtons[i];
+                if (btn.getAttribute('data-cart-attached') === 'true') continue;
+                btn.setAttribute('data-cart-attached', 'true');
+                
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productTile = this.closest('.product-tile');
+                    if (!productTile) return;
+                    
+                    const brandTag = productTile.querySelector('.brand-tag');
+                    const productName = productTile.querySelector('.product-name');
+                    const currentPrice = productTile.querySelector('.current-price');
+                    const productImg = productTile.querySelector('.product-media img');
+                    
+                    const brand = brandTag ? brandTag.textContent : 'Бренд';
+                    let name = productName ? productName.textContent : 'Товар';
+                    let priceText = currentPrice ? currentPrice.textContent : '0';
+                    const price = parseInt(priceText.replace(/[^\d]/g, '')) || 0;
+                    const imgSrc = productImg ? productImg.src : 'images/sprite/cream.png';
+                    
+                    let itemId = brand + '_' + name.replace(/\s/g, '_');
+                    
+                    addToCart({
+                        id: itemId,
+                        brand: brand,
+                        name: name,
+                        price: price,
+                        img: imgSrc
+                    });
+                });
+            }
+        }
+        
+        // Наблюдаем за изменениями DOM
+        const observer = new MutationObserver(function() {
+            attachBuyButtons();
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+        
+        // Инициализация
+        loadCart();
+        attachBuyButtons();
+    })();
+    </script>
+</body>
+</html>
